@@ -27,7 +27,9 @@ const AudioBottomBar = (props) => {
     <Animated.View style={{ transform: [{ translateY }] }}>
       <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
         <View style={styles.container}>
-          <View style={styles.block}></View>
+          <View style={styles.block}>
+            <Image style={styles.image} source={item.preview} />
+          </View>
           <View style={styles.center}>
             <Text style={{ fontSize: 20, color: 'white' }}>{item.title}</Text>
             <Text style={{ color: 'white' }}>{item.artist}</Text>
@@ -91,6 +93,12 @@ const styles = StyleSheet.create({
   icon: {
     height: 20,
     width: 20,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    marginLeft: 20,
+    borderRadius: 100,
   },
 });
 

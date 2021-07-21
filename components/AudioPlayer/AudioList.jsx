@@ -8,23 +8,44 @@ import AudioModal from './AudioModal';
 import useSound from '../../hooks/useSound';
 
 const AudioList = () => {
-  const { duration, setSource, play, pause, position, progress, isPlay } =
-    useSound();
+  const {
+    duration,
+    setSource,
+    play,
+    pause,
+    position,
+    progress,
+    isPlay,
+    playFromPosition,
+    setFinishFunc,
+  } = useSound();
 
   const [selected, setSelected] = React.useState(null);
   const [modal, setModal] = React.useState(false);
 
-  async function playSound(index) {
-    setSource((index && { uri: songs[index].url }) || null);
+  async function playSound(index, shouldPlay) {
+    setSource((index && { uri: songs[index].url, shouldPlay }) || null);
+    setSelected(index);
   }
 
   const onSelect = (index) => {
     if (index === selected) index = null;
-    setSelected(() => {
-      playSound(index);
-      return index;
-    });
+    playSound(index, selected === null || isPlay);
   };
+
+  const prev = () => {
+    const index = selected === 0 ? songs.length - 1 : selected - 1;
+    playSound(index, isPlay);
+  };
+
+  const next = () => {
+    const index = selected === songs.length - 1 ? 0 : selected + 1;
+    playSound(index, isPlay);
+  };
+
+  React.useEffect(() => {
+    setFinishFunc(() => next.bind(this));
+  }, []);
 
   return (
     <>
@@ -58,6 +79,14 @@ const AudioList = () => {
           close={() => setModal(!modal)}
           progress={progress}
           position={position}
+          isPlay={isPlay}
+          pause={pause}
+          play={play}
+          prev={prev}
+          next={next}
+          playFromPosition={playFromPosition}
+          index={selected}
+          images={songs.map((el) => el.preview)}
         />
       )}
     </>

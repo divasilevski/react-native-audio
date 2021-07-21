@@ -4,7 +4,13 @@ import { Audio } from 'expo-av';
 function millisToTime(millis) {
   const minutes = Math.floor(millis / 60000);
   const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+  return (
+    (minutes < 10 ? '0' : '') +
+    minutes +
+    ':' +
+    (seconds < 10 ? '0' : '') +
+    seconds
+  );
 }
 
 export default function (initSource) {
@@ -14,6 +20,7 @@ export default function (initSource) {
   const [position, setPosition] = React.useState('00:00');
   const [progress, setProgress] = React.useState(0);
   const [isPlay, setIsPlay] = React.useState(false);
+  const [finishFunc, setFinishFunc] = React.useState(() => {});
 
   const play = async () => {
     if (!isPlay) {
@@ -29,14 +36,24 @@ export default function (initSource) {
     }
   };
 
+  const playFromPosition = async (progress) => {
+    if (sound) {
+      const status = await sound.getStatusAsync();
+      const millis = Math.ceil(status.durationMillis * progress);
+      await sound.playFromPositionAsync(millis);
+    }
+  };
+
   const loadSound = async () => {
     const { sound } = await Audio.Sound.createAsync(source);
     const status = await sound.getStatusAsync();
     setDuration(millisToTime(status.durationMillis));
     setSound(sound);
 
-    sound && (await sound.playAsync());
-    setIsPlay(true);
+    if (source.shouldPlay) {
+      sound && (await sound.playAsync());
+      setIsPlay(true);
+    }
   };
 
   const unloadSound = async () => {
@@ -50,7 +67,12 @@ export default function (initSource) {
   const calcPositionProgress = async () => {
     const status = await sound.getStatusAsync();
     setPosition(millisToTime(status.positionMillis));
-    setProgress(status.positionMillis / status.durationMillis);
+    const progress = status.positionMillis / status.durationMillis;
+    setProgress(progress);
+    if (progress === 1) {
+      pause();
+      finishFunc();
+    }
   };
 
   React.useEffect(() => {
@@ -75,5 +97,7 @@ export default function (initSource) {
     pause,
     position,
     progress,
+    playFromPosition,
+    setFinishFunc,
   };
 }
