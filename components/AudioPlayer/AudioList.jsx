@@ -2,40 +2,23 @@ import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { songs } from './mocks';
 import AudioItem from './AudioItem';
-import AudioBottomBar from './AudioBottomBar';
+import AudioBottom from './AudioBottom';
 import AudioModal from './AudioModal';
 
-import { Audio } from 'expo-av';
+import useSound from '../../hooks/useSound';
 
 const AudioList = () => {
-  const [sound, setSound] = React.useState();
-
-  async function playSound(index) {
-    const { sound } = await Audio.Sound.createAsync({
-      uri: songs[index].url,
-    });
-    setSound(sound);
-    const status = await sound.getStatusAsync();
-    console.log(status);
-    await sound.playAsync();
-  }
-
-  React.useEffect(() => {
-    return sound
-      ? () => {
-          console.log('Unloading Sound');
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
-
-  ////////////////////////////////////////////////
+  const { duration, setSource, play, pause, position, progress, isPlay } =
+    useSound();
 
   const [selected, setSelected] = React.useState(null);
   const [modal, setModal] = React.useState(false);
 
+  async function playSound(index) {
+    setSource((index && { uri: songs[index].url }) || null);
+  }
+
   const onSelect = (index) => {
-    sound && sound.pauseAsync();
     if (index === selected) index = null;
     setSelected(() => {
       playSound(index);
@@ -51,22 +34,30 @@ const AudioList = () => {
         renderItem={({ item, index }) => (
           <AudioItem
             item={item}
-            isPlay={index === selected}
+            isPlay={isPlay}
+            selected={index === selected}
             onSelect={() => onSelect(index)}
           />
         )}
       />
       {selected !== null && (
-        <AudioBottomBar
+        <AudioBottom
           item={songs[selected]}
+          progress={progress}
           onPress={() => setModal(!modal)}
+          isPlay={isPlay}
+          play={play}
+          pause={pause}
         />
       )}
       {selected !== null && (
         <AudioModal
           item={songs[selected]}
+          duration={duration}
           visible={modal}
           close={() => setModal(!modal)}
+          progress={progress}
+          position={position}
         />
       )}
     </>

@@ -1,6 +1,6 @@
 export const songs = [
   {
-    title: 'death bed',
+    title: 'Death bed',
     artist: 'Powfu',
     preview: {
       uri: 'https://images.unsplash.com/photo-1524650359799-842906ca1c06?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
@@ -9,7 +9,7 @@ export const songs = [
     id: '1',
   },
   {
-    title: 'bad liar',
+    title: 'Bad liar',
     artist: 'Imagine Dragons',
     preview: {
       uri: 'https://images.unsplash.com/photo-1573247318220-36d3269fbff7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
@@ -18,7 +18,7 @@ export const songs = [
     id: '2',
   },
   {
-    title: 'faded',
+    title: 'Faded',
     artist: 'Alan Walker',
     preview: {
       uri: 'https://images.unsplash.com/photo-1515333437113-6464312e1885?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
@@ -27,7 +27,7 @@ export const songs = [
     id: '3',
   },
   {
-    title: 'hate me',
+    title: 'Hate me',
     artist: 'Ellie Goulding',
     preview: {
       uri: 'https://images.unsplash.com/photo-1565791381266-8047707de6bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
@@ -45,7 +45,7 @@ export const songs = [
     id: '5',
   },
   {
-    title: 'without me',
+    title: 'Without me',
     artist: 'Halsey',
     preview: {
       uri: 'https://images.unsplash.com/photo-1583265627959-fb7042f5133b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',

@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 
-const AudioModal = ({ item, visible, close }) => {
+const AudioModal = ({ item, visible, close, duration }) => {
   const { title, artist, preview } = item;
 
   return (
@@ -37,6 +37,11 @@ const AudioModal = ({ item, visible, close }) => {
           style={{ height: 5, backgroundColor: 'orange', width: 300 }}
         ></View>
       </View>
+
+      <View>
+        <Text>{duration}</Text>
+      </View>
+
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <TouchableOpacity>
           <Text style={{ padding: 30 }}>{'<'}</Text>
