@@ -40,6 +40,7 @@ const AudioModal = (props) => {
   } = props;
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
+  const ref = React.useRef(null);
   const [scrollIndex, setScrollIndex] = React.useState(index);
 
   React.useEffect(() => {
@@ -58,6 +59,12 @@ const AudioModal = (props) => {
     }
   }, [scrollIndex]);
 
+  React.useEffect(() => {
+    if (ref.current && index) {
+      ref.current.scrollToIndex({ index });
+    }
+  }, [index]);
+
   return (
     <Modal animationType="slide" visible={visible}>
       <View style={styles.header}>
@@ -70,6 +77,7 @@ const AudioModal = (props) => {
 
       <View>
         <FlatList
+          ref={ref}
           data={images}
           horizontal
           pagingEnabled

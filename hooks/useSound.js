@@ -40,7 +40,8 @@ export default function (initSource) {
     if (sound) {
       const status = await sound.getStatusAsync();
       const millis = Math.ceil(status.durationMillis * progress);
-      await sound.playFromPositionAsync(millis);
+      await sound.setPositionAsync(millis);
+      calcPositionProgress()
     }
   };
 
