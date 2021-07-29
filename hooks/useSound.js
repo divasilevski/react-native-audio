@@ -41,7 +41,7 @@ export default function (initSource) {
       const status = await sound.getStatusAsync();
       const millis = Math.ceil(status.durationMillis * progress);
       await sound.setPositionAsync(millis);
-      calcPositionProgress()
+      calcPositionProgress();
     }
   };
 
@@ -75,6 +75,18 @@ export default function (initSource) {
       finishFunc();
     }
   };
+
+  React.useEffect(() => {
+    Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      staysActiveInBackground: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: false,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+    });
+  }, []);
 
   React.useEffect(() => {
     sound && unloadSound();

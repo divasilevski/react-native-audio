@@ -6,6 +6,7 @@ import AudioBottom from './AudioBottom';
 import AudioModal from './AudioModal';
 
 import useSound from '../../hooks/useSound';
+import useSoundNotifications from '../../hooks/useSoundNotifications';
 
 const AudioList = () => {
   const {
@@ -19,6 +20,8 @@ const AudioList = () => {
     playFromPosition,
     setFinishFunc,
   } = useSound();
+
+  const { pushNotification, setAction } = useSoundNotifications();
 
   const [selected, setSelected] = React.useState(null);
   const [modal, setModal] = React.useState(false);
@@ -47,8 +50,21 @@ const AudioList = () => {
     setFinishFunc(() => next.bind(this));
   }, []);
 
+  React.useEffect(() => {
+    selected &&
+      pushNotification({
+        title: songs[selected].title,
+        position,
+        duration,
+        isPlay,
+        pause,
+      });
+    setAction(() => (isPlay ? pause : play));
+  }, [position, isPlay]);
+
   return (
     <>
+      {/* <Button title="push" onPress={pushMusicNotification}></Button> */}
       <FlatList
         data={songs}
         keyExtractor={(item) => item.id}
