@@ -26,8 +26,13 @@ const AudioList = () => {
   const [selected, setSelected] = React.useState(null);
   const [modal, setModal] = React.useState(false);
 
-  async function playSound(index, shouldPlay) {
-    setSource((index && { uri: songs[index].url, shouldPlay }) || null);
+  function playSound(index, shouldPlay) {
+    if (index !== null) {
+      setSource({ uri: songs[index].url, shouldPlay });
+    } else {
+      setSource(null);
+    }
+
     setSelected(index);
   }
 

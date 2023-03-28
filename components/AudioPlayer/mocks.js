@@ -1,14 +1,5 @@
 export const songs = [
   {
-    title: 'Death bed',
-    artist: 'Powfu',
-    preview: {
-      uri: 'https://images.unsplash.com/photo-1524650359799-842906ca1c06?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    },
-    url: 'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
-    id: '1',
-  },
-  {
     title: 'Bad liar',
     artist: 'Imagine Dragons',
     preview: {
